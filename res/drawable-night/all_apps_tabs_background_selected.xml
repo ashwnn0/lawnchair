@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Selected app drawer tab: dark sea-glass pill. -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
-    <corners android:radius="@dimen/all_apps_header_pill_corner_radius" />
-    <gradient android:angle="90" android:startColor="#D92D6877" android:endColor="#A8174654" />
-    <stroke android:width="1dp" android:color="#668FE6F0" />
-</shape>
+<!-- Selected app drawer tab: inset dark sea-glass pill. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:bottom="@dimen/all_apps_tabs_focus_vertical_inset"
+        android:end="@dimen/all_apps_tabs_focus_horizontal_inset"
+        android:start="@dimen/all_apps_tabs_focus_horizontal_inset"
+        android:top="@dimen/all_apps_tabs_focus_vertical_inset">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/all_apps_header_pill_corner_radius" />
+            <gradient android:angle="90" android:startColor="#D92D6877" android:endColor="#A8174654" />
+            <stroke android:width="1dp" android:color="#668FE6F0" />
+        </shape>
+    </item>
+</layer-list>
