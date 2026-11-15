@@ -219,9 +219,20 @@ public class Hotseat extends FrameLayout implements Insettable {
                 TypedValue.COMPLEX_UNIT_DIP,
                 cornerRadiusDp,
                 getResources().getDisplayMetrics());
-        GradientDrawable background = new GradientDrawable();
-        background.setColor(finalColor);
+        int[] glassColors = new int[] {
+                Color.argb(Math.min(255, alphaValue + 38), Color.red(baseColor),
+                        Color.green(baseColor), Color.blue(baseColor)),
+                Color.argb(alphaValue, Color.red(baseColor),
+                        Color.green(baseColor), Color.blue(baseColor)),
+                Color.argb(Math.max(0, alphaValue - 24), Color.red(baseColor),
+                        Color.green(baseColor), Color.blue(baseColor))
+        };
+        GradientDrawable background = new GradientDrawable(
+                GradientDrawable.Orientation.TOP_BOTTOM, glassColors);
         background.setCornerRadius(cornerRadius);
+        int borderWidth = Math.max(1, Math.round(getResources().getDisplayMetrics().density));
+        int borderAlpha = Math.min(120, alphaValue / 2 + 28);
+        background.setStroke(borderWidth, Color.argb(borderAlpha, 255, 255, 255));
         InsetDrawable bg = new InsetDrawable(background,
                 insetHorizontalLeft, insetVerticalTop, insetHorizontalRight, insetVerticalBottom);
         setBackground(bg);
