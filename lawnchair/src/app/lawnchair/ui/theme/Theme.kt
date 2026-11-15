@@ -101,7 +101,7 @@ fun getColorScheme(darkTheme: Boolean): ColorScheme {
         ThemeProvider.INSTANCE.get(context).colorScheme
     }
 
-    return colorScheme.toComposeColorScheme(isDark = darkTheme)
+    return colorScheme.toComposeColorScheme(isDark = darkTheme).withAquaGlassAccents(darkTheme)
 }
 
 private fun getPreviewColorScheme(darkTheme: Boolean) = if (darkTheme) {
