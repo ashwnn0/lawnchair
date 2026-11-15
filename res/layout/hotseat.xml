@@ -21,6 +21,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/HomeScreenElementTheme"
+    android:background="@drawable/aqua_glass_dock"
     android:importantForAccessibility="no"
     android:clickable="false"
     android:longClickable="false"
