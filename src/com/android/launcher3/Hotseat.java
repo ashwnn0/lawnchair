@@ -54,6 +54,9 @@ import com.android.launcher3.util.MultiTranslateDelegate;
 import com.android.launcher3.util.MultiValueAlpha;
 import com.android.launcher3.views.ActivityContext;
 
+import com.example.liquidglass.GlassMaterial;
+import com.example.liquidglass.LiquidGlassView;
+
 import java.io.PrintWriter;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -71,6 +74,8 @@ import app.lawnchair.preferences2.PreferenceManager2;
  * Hosts a {@link app.lawnchair.hotseat.HotseatPagedView} of icon grids plus an optional QSB.
  */
 public class Hotseat extends FrameLayout implements Insettable {
+
+    private final LiquidGlassView mLiquidGlassSurface;
 
     public static final int ALPHA_CHANNEL_TASKBAR_ALIGNMENT = 0;
     public static final int ALPHA_CHANNEL_PREVIEW_RENDERER = 1;
@@ -149,6 +154,25 @@ public class Hotseat extends FrameLayout implements Insettable {
         }
         int layoutId = hotseatMode.getLayoutResourceId();
 
+        // Real prismatic glass surface sits behind the dock content.
+        mLiquidGlassSurface = new LiquidGlassView(context);
+        mLiquidGlassSurface.setLayoutParams(new LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        mLiquidGlassSurface.setClickable(false);
+        mLiquidGlassSurface.setFocusable(false);
+        mLiquidGlassSurface.setBackgroundColor(Color.TRANSPARENT);
+        mLiquidGlassSurface.setCornerRadius(TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 32f, getResources().getDisplayMetrics()));
+        mLiquidGlassSurface.setMaterial(GlassMaterial.CLEAR);
+        mLiquidGlassSurface.setEnableDynamicBackground(true);
+        mLiquidGlassSurface.setEnableSensorHighlight(true);
+        mLiquidGlassSurface.setEnableAdaptiveTint(true);
+        mLiquidGlassSurface.setRefractionHeight(18f);
+        mLiquidGlassSurface.setBevelWidth(28f);
+        mLiquidGlassSurface.setDispersionStrength(0.12f);
+        mLiquidGlassSurface.setGlassTint(0x24D9F6FF);
+        addView(mLiquidGlassSurface);
+
         mIconsContainer = new FrameLayout(context);
         mIconsContainer.setLayoutParams(new LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -201,8 +225,18 @@ public class Hotseat extends FrameLayout implements Insettable {
         setClipToPadding(false);
     }
 
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        // The DragLayer contains the live workspace/wallpaper behind the dock.
+        if (getParent() instanceof View) {
+            mLiquidGlassSurface.setBackdropSource((View) getParent());
+        }
+        mLiquidGlassSurface.setEnableDynamicBackground(true);
+    }
+
     private void setUpBackground() {
-        if(!preferenceManager.getHotseatBG().get()) return;
+        // The glass renderer supplies the dock surface; retain preference-controlled tint below.
 
         var bgColor = PreferenceCacheExtensionsKt.firstCached(preferenceManager2.getHotseatBackgroundColor());
         var transparency = preferenceManager.getHotseatBGAlpha().get();
