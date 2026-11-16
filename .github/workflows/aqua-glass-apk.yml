@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build-apk:
@@ -26,10 +26,18 @@ jobs:
         uses: gradle/actions/setup-gradle@v6
       - name: Build APK
         run: ./gradlew assembleLawnWithQuickstepNightlyRelease
-      - name: Upload APK
+      - name: Upload APK artifact
         uses: actions/upload-artifact@v7
         with:
           name: Aqua-Glass-APK
           path: build/outputs/apk/**/*.apk
           if-no-files-found: error
           retention-days: 14
+      - name: Publish prerelease
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: aqua-glass-build-${{ github.run_number }}
+          name: Aqua Glass build ${{ github.run_number }}
+          body: Automated Aqua Glass launcher build from commit ${{ github.sha }}.
+          prerelease: true
+          files: build/outputs/apk/**/*.apk
