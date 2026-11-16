@@ -44,6 +44,9 @@ import android.widget.FrameLayout;
 import androidx.annotation.IntDef;
 import androidx.annotation.Nullable;
 
+import com.example.liquidglass.GlassMaterial;
+import com.example.liquidglass.LiquidGlassView;
+
 import com.android.launcher3.accessibility.DragAndDropAccessibilityDelegate;
 import com.android.launcher3.celllayout.CellLayoutLayoutParams;
 import com.android.launcher3.pageindicators.PageIndicatorDots;
@@ -111,6 +114,7 @@ public class Hotseat extends FrameLayout implements Insettable {
 
     private final View mQsb;
     private final FrameLayout mIconsContainer;
+    private final LiquidGlassView mAquaGlassDock;
     private final HotseatPagedView mPagedView;
     private final PageIndicatorDots mPageIndicator;
     private final int mPageIndicatorHeight;
@@ -155,6 +159,29 @@ public class Hotseat extends FrameLayout implements Insettable {
         mIconsContainer.setClipChildren(false);
         mIconsContainer.setClipToPadding(false);
         addView(mIconsContainer);
+
+        // A real refractive glass layer sits behind the dock icons. The workspace is
+        // supplied as its backdrop so wallpaper and workspace content are optically bent.
+        mAquaGlassDock = new LiquidGlassView(context);
+        int glassInset = Math.round(7 * getResources().getDisplayMetrics().density);
+        LayoutParams glassLp = new LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        glassLp.setMargins(glassInset, glassInset, glassInset, glassInset);
+        mAquaGlassDock.setLayoutParams(glassLp);
+        mAquaGlassDock.setCornerRadius(TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 30,
+                getResources().getDisplayMetrics()));
+        mAquaGlassDock.setMaterial(GlassMaterial.REGULAR);
+        mAquaGlassDock.setRefractionHeight(22f);
+        mAquaGlassDock.setBevelWidth(16f);
+        mAquaGlassDock.setDispersionStrength(0.075f);
+        mAquaGlassDock.setGlassTint(0xFF79DDF2, 0.13f);
+        mAquaGlassDock.setEnableSensorHighlight(true);
+        mAquaGlassDock.setEnableAdaptiveTint(true);
+        mAquaGlassDock.setEnableDynamicBackground(true);
+        mAquaGlassDock.setVisibility(preferenceManager.getHotseatBG().get()
+                ? VISIBLE : GONE);
+        mIconsContainer.addView(mAquaGlassDock);
 
         mPagedView = new HotseatPagedView(context);
         mPagedView.setLayoutParams(new LayoutParams(
@@ -219,9 +246,20 @@ public class Hotseat extends FrameLayout implements Insettable {
                 TypedValue.COMPLEX_UNIT_DIP,
                 cornerRadiusDp,
                 getResources().getDisplayMetrics());
-        GradientDrawable background = new GradientDrawable();
-        background.setColor(finalColor);
+        int[] glassColors = new int[] {
+                Color.argb(Math.min(255, alphaValue + 38), Color.red(baseColor),
+                        Color.green(baseColor), Color.blue(baseColor)),
+                Color.argb(alphaValue, Color.red(baseColor),
+                        Color.green(baseColor), Color.blue(baseColor)),
+                Color.argb(Math.max(0, alphaValue - 24), Color.red(baseColor),
+                        Color.green(baseColor), Color.blue(baseColor))
+        };
+        GradientDrawable background = new GradientDrawable(
+                GradientDrawable.Orientation.TOP_BOTTOM, glassColors);
         background.setCornerRadius(cornerRadius);
+        int borderWidth = Math.max(1, Math.round(getResources().getDisplayMetrics().density));
+        int borderAlpha = Math.min(120, alphaValue / 2 + 28);
+        background.setStroke(borderWidth, Color.argb(borderAlpha, 255, 255, 255));
         InsetDrawable bg = new InsetDrawable(background,
                 insetHorizontalLeft, insetVerticalTop, insetHorizontalRight, insetVerticalBottom);
         setBackground(bg);
@@ -430,6 +468,7 @@ public class Hotseat extends FrameLayout implements Insettable {
 
     public void setWorkspace(Workspace<?> w) {
         mWorkspace = w;
+        mAquaGlassDock.setBackdropSource(w);
         for (CellLayout page : getPageLayouts()) {
             page.setCellLayoutContainer(w);
         }

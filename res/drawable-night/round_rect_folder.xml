@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Translucent dark Aqua Glass folder surface. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <corners android:radius="@dimen/bg_round_rect_radius" />
+    <gradient android:angle="90" android:startColor="#A52C8295" android:centerColor="#87205E70" android:endColor="#74154352" />
+    <stroke android:width="1dp" android:color="#668FE6F0" />
+</shape>
