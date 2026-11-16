@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Selected app drawer tab: inset aqua glass pill. -->
+<!-- Selected app drawer tab: translucent inset aqua glass pill. -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:bottom="@dimen/all_apps_tabs_focus_vertical_inset"
@@ -8,8 +8,8 @@
         android:top="@dimen/all_apps_tabs_focus_vertical_inset">
         <shape android:shape="rectangle">
             <corners android:radius="@dimen/all_apps_header_pill_corner_radius" />
-            <gradient android:angle="90" android:startColor="#D8FFFFFF" android:endColor="#AFC1EAF0" />
-            <stroke android:width="1dp" android:color="#CFFFFFFF" />
+            <gradient android:angle="90" android:startColor="#B8FFFFFF" android:endColor="#8FC1EAF0" />
+            <stroke android:width="1dp" android:color="#BFFFFFFF" />
         </shape>
     </item>
 </layer-list>
