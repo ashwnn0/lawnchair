@@ -378,6 +378,9 @@ composeCompiler {
 addFrameworkJar('framework-16.jar')
 
 dependencies {
+    // iOS-style prismatic Liquid Glass surfaces (MIT, QWEA0).
+    implementation("com.github.QWEA0:liquidglass:v2.0.11")
+
     implementation projects.iconloaderlib
     implementation projects.searchuilib
     implementation projects.animationlib
