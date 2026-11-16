@@ -374,15 +374,16 @@
     </style>
 
     <style name="AllAppsBlurStyle">
-        <item name="allAppsScrimColor">@color/shade_panel_scrim_color</item>
-        <item name="groupHighlight">@color/surface_effect_1</item>
-        <item name="focusHighlight">@color/surface_effect_2</item>
-        <item name="allAppsSurfaceLow">@color/surface_effect_0</item>
-        <item name="allAppsSurfaceHighest">@color/surface_effect_2</item>
-        <item name="allAppsUnselectedTab">@color/surface_effect_2</item>
-        <item name="allappsHeaderProtectionColor">@color/surface_effect_1</item>
-        <item name="privateSpaceSettingsColor">@color/surface_effect_2</item>
-        <item name="privateSpaceDividerColor">@color/surface_effect_3</item>
+        <!-- Android cross-window blur supplies the live background; these layers tint its light. -->
+        <item name="allAppsScrimColor">@color/aqua_glass_blur_surface</item>
+        <item name="groupHighlight">@color/aqua_glass_blur_highlight</item>
+        <item name="focusHighlight">@color/aqua_glass_blur_highlight</item>
+        <item name="allAppsSurfaceLow">@color/aqua_glass_blur_surface</item>
+        <item name="allAppsSurfaceHighest">@color/aqua_glass_blur_surface</item>
+        <item name="allAppsUnselectedTab">@color/aqua_glass_blur_surface</item>
+        <item name="allappsHeaderProtectionColor">@color/aqua_glass_blur_highlight</item>
+        <item name="privateSpaceSettingsColor">@color/aqua_glass_blur_surface</item>
+        <item name="privateSpaceDividerColor">@color/aqua_glass_blur_edge</item>
         <item name="bottomSheetDragHandleColor">@color/materialColorOnSurface</item>
     </style>
 

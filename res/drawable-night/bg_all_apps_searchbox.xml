@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Aqua Glass search field for dark theme. -->
+<!-- Dark translucent Aqua Glass search surface. -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
     <corners android:radius="28dp" />
-    <gradient
-        android:angle="90"
-        android:startColor="#D92D6877"
-        android:centerColor="#C51D5362"
-        android:endColor="#A8174654" />
+    <gradient android:angle="90" android:startColor="#A52D6877" android:centerColor="#8C1D5362" android:endColor="#74174654" />
     <stroke android:width="1dp" android:color="#668FE6F0" />
 </shape>

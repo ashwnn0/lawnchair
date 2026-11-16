@@ -99,4 +99,11 @@
     <color name="nudge_pill_color2">#7430E2</color>
     <color name="nudge_pill_color3">#2A7EC8</color>
     <color name="nudge_pill_color4">#2DB8BD</color>
+
+    <!-- Aqua Glass: translucent tint layers composited over Android's live cross-window blur. -->
+    <color name="aqua_glass_blur_surface_0">#66BCECF4</color>
+    <color name="aqua_glass_blur_surface_1">#75E6FAFF</color>
+    <color name="aqua_glass_blur_surface_2">#99D8F5FA</color>
+    <color name="aqua_glass_blur_surface_3">#B3F5FDFF</color>
+    <color name="aqua_glass_blur_scrim">#33105C6B</color>
 </resources>
